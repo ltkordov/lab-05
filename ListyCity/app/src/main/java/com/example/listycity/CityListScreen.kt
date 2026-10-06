@@ -33,6 +33,7 @@ fun CityListScreen(
     cities: List<City>,
     onAddCity: (City) -> Unit,
     onUpdateCity: (City, City) -> Unit,
+    onDeleteCity: (City) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var newCityName by remember { mutableStateOf("") }
@@ -168,7 +169,9 @@ fun CityListScreen(
                         editedCityName = city.name
                         editedProvinceName = city.province
                     },
-                    onDelete = {}
+                    onDelete = {
+                        onDeleteCity(city)
+                    }
                 )
                 if (index < cities.lastIndex) {
                     HorizontalDivider()
@@ -182,7 +185,7 @@ fun CityListScreen(
 @Composable
 fun CityRow(
     city: City,
-    onClick: () -> Unit
+    onClick: () -> Unit,
     onDelete: () -> Unit
 ) {
     Row(
@@ -222,7 +225,8 @@ fun CityListScreenPreview() {
                 City("Calgary", "AB")
             ),
             onAddCity = {},
-            onUpdateCity = { _, _ -> }
+            onUpdateCity = { _, _ -> },
+            onDeleteCity = { _, -> }
         )
     }
 }

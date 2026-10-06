@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -166,7 +167,8 @@ fun CityListScreen(
                         selectedCity = city
                         editedCityName = city.name
                         editedProvinceName = city.province
-                    }
+                    },
+                    onDelete = {}
                 )
                 if (index < cities.lastIndex) {
                     HorizontalDivider()
@@ -181,12 +183,14 @@ fun CityListScreen(
 fun CityRow(
     city: City,
     onClick: () -> Unit
+    onDelete: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .padding(horizontal = 20.dp, vertical = 16.dp)
+            .padding(horizontal = 20.dp, vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = city.name,
@@ -199,6 +203,11 @@ fun CityRow(
             fontSize = 30.sp,
             modifier = Modifier.weight(1f)
         )
+        Button(onClick = {
+            onDelete()
+        }) {
+            Text("Delete")
+        }
     }
 }
 
